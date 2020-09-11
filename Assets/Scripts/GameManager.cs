@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void stopPlayer() {
-        GameObject.FindObjectOfType<PlayerShip>().StopMoving();
+        GameObject.FindObjectOfType<PlayerMove>().StopMoving();
     }
 
 }

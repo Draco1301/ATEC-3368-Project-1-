@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 3527671720615220482}
   - component: {fileID: 3527671720615220480}
   - component: {fileID: 3527671720615220510}
+  - component: {fileID: 871777520974983046}
   m_Layer: 0
   m_Name: Powerup_Bomb
   m_TagString: Untagged
@@ -372,6 +373,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23341473616578a46ba46290cd20be53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &871777520974983046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3527671720615220509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f81ecf2c0705364a878934f250ea343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3527671721393282173

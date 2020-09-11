@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerShip : MonoBehaviour {
+public class PlayerMove : MonoBehaviour {
+    
+    Rigidbody _rb = null;
+
     [SerializeField] float _moveSpeed = 12f;
-    [SerializeField] float _turnSpeed = 12f;
+    [SerializeField] GameObject _art;
     [SerializeField] Gradient _trailDefualtColor;
     [SerializeField] ParticleSystem _leftWing;
     [SerializeField] ParticleSystem _rightWing;
@@ -14,8 +17,11 @@ public class PlayerShip : MonoBehaviour {
     [SerializeField] PlayerAudio _pAudio;
 
     public Vector3 _localVelocity;
+    
+    private Vector3 _point;
+    private Vector3 _mousePos;
 
-    Rigidbody _rb = null;
+
 
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
@@ -35,44 +41,27 @@ public class PlayerShip : MonoBehaviour {
 
     private void EmitParticles() {
 
-        _localVelocity = transform.InverseTransformDirection(_rb.velocity);
+        _localVelocity = _rb.velocity;
 
-        if (_localVelocity.z > 0) {
+        if (_localVelocity.magnitude > 1) {
+
             if (!_leftWing.isPlaying) {
                 _leftWing.Play();
             }
             if (!_rightWing.isPlaying) {
                 _rightWing.Play();
             }
-        } else if (Input.GetAxisRaw("Horizontal") > 0) {
-            if (!_leftWing.isPlaying) {
-                _leftWing.Play();
-                _rightWing.Stop();
-                _thruster.Stop();
-
+            if (!_thruster.isPlaying) {
+                _thruster.Play();
             }
-        } else if (Input.GetAxisRaw("Horizontal") < 0) {
-            if (!_rightWing.isPlaying) {
-                _leftWing.Stop();
-                _rightWing.Play();
-                _thruster.Stop();
-            }
+            _pAudio.PlayThruster(true);
         } else {
             _leftWing.Stop();
             _rightWing.Stop();
-        }
-
-        if (Input.GetAxisRaw("Vertical") > 0) {
-            if (!_thruster.isPlaying) {
-                _thruster.Play();
-                _pAudio.PlayThruster(true);
-            }
-        } else {
             _thruster.Stop();
             _pAudio.PlayThruster(false);
 
         }
-
     }
 
     public void SetSpeed(float speedChange) {
@@ -94,26 +83,33 @@ public class PlayerShip : MonoBehaviour {
     }
 
     private void MoveShip() {
-        float moveAmountThisFrame = Input.GetAxisRaw("Vertical") * _moveSpeed;
-        Vector3 moveDirection = transform.forward * moveAmountThisFrame;
+        Vector3 moveDirection = new Vector3(Input.GetAxisRaw("Horizontal") * _moveSpeed, 0f, Input.GetAxisRaw("Vertical") * _moveSpeed);
+        if (moveDirection.magnitude == 0) {
+            _rb.drag = 2f;
+        } else {
+            _rb.drag = 0.5f;
+        }
         _rb.AddForce(moveDirection);
     }
 
     private void TurnShip() {
-        float turnAmountThisFrame = Input.GetAxisRaw("Horizontal") * _turnSpeed;
-        Quaternion turnOffset = Quaternion.Euler(0, turnAmountThisFrame, 0);
-        _rb.MoveRotation(_rb.rotation * turnOffset);
+        _mousePos = Input.mousePosition;
+        _point = Camera.main.ScreenToWorldPoint(new Vector3(_mousePos.x, _mousePos.y, 30f));
+
+        _art.transform.LookAt(_point);
     }
 
     public void Kill() {
-        Debug.Log("Player has been killed!");
         this.gameObject.SetActive(false);
     }
 
     public void StopMoving() {
         _rb.velocity = new Vector3(0,0,0);
         _moveSpeed = 0;
-        _turnSpeed = 0;
+    }
+
+    public Quaternion GetRotation() {
+        return _art.transform.rotation;
     }
 
 }

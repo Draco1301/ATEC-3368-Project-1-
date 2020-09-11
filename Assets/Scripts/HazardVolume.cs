@@ -5,7 +5,7 @@ using UnityEngine;
 public class HazardVolume : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
-        PlayerShip playerShip = other.gameObject.GetComponent<PlayerShip>();
+        PlayerMove playerShip = other.gameObject.GetComponent<PlayerMove>();
 
         if (playerShip != null) {
             playerShip.Kill();

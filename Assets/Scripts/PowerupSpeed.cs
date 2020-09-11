@@ -24,14 +24,16 @@ public class PowerupSpeed : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        PlayerShip playerShip = other.gameObject.GetComponent<PlayerShip>();
+        PlayerMove playerShip = other.gameObject.GetComponent<PlayerMove>();
 
         if (playerShip != null && _poweredUp == false) {
             StartCoroutine(PowerupSequence(playerShip));
+        } else if (other.gameObject.GetComponent<MotherShip>()) {
+            Destroy(this.gameObject);
         }
     }
 
-    IEnumerator PowerupSequence(PlayerShip playerShip) {
+    IEnumerator PowerupSequence(PlayerMove playerShip) {
 
         _poweredUp = true;
 
@@ -47,8 +49,8 @@ public class PowerupSpeed : MonoBehaviour
     }
 
 
-    private void ActivatePowerup(PlayerShip playerShip) {
-        SpeedboostUI.Instance.SetTimer(_powerupDuration);
+    private void ActivatePowerup(PlayerMove playerShip) {
+       
 
 
         foreach (PowerupSpeed ps in _activePowerups) {
@@ -68,7 +70,7 @@ public class PowerupSpeed : MonoBehaviour
         _visualsToDeactivate.SetActive(false);
     }
 
-    private void DeactivatePowerup(PlayerShip playerShip) {
+    private void DeactivatePowerup(PlayerMove playerShip) {
         foreach (PowerupSpeed ps in _activePowerups) {
             if (ps._poweredUp) {
                 Destroy(this.gameObject);

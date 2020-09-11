@@ -6,10 +6,13 @@ public class PowerupBomb : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.GetComponent<PlayerHealth>()) {
-            Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 30);
-            foreach (var hitCollider in hitColliders) {
-                hitCollider.GetComponent<Asteroid>()?.Die(); 
+            Asteroid[] astros = GameObject.FindObjectsOfType<Asteroid>();
+            foreach (Asteroid a in astros) {
+                a.Die();
+                PlayManager.instance.addScore(100);
             }
+            Destroy(this.gameObject);
+        } else if (other.gameObject.GetComponent<MotherShip>()) {
             Destroy(this.gameObject);
         }
     }

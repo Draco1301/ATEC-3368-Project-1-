@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int _maxHealth;
-    [SerializeField] Image _healthBar;
     [SerializeField] float _respawnTime = 3;
     [SerializeField] GameObject _art;
     [SerializeField] PlayerAudio _pAudio;
@@ -21,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.GetComponent<Asteroid>()) {
             collision.gameObject.GetComponent<Asteroid>().Die();
             _health--;
-            _healthBar.fillAmount = (float)_health / (float)_maxHealth;
+            UIManager.instance.setPlayerHealthBar((float)_health/_maxHealth);
             if (_health <= 0) {
                 StartCoroutine(DieAndRespawn());
 
@@ -29,20 +28,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public bool healthUP() {
-        if (_health == _maxHealth) {
-            return false;
-        }
-
-        _health++;
-        _healthBar.fillAmount = (float)_health / (float)_maxHealth;
-        return true;
+    public void healthUP() {
+        _health = _maxHealth;
+        UIManager.instance.setPlayerHealthBar(1);
     }
 
     IEnumerator DieAndRespawn() {
 
         _art.SetActive(false);
-        this.GetComponent<PlayerShip>().enabled = false;
+        this.GetComponent<PlayerMove>().enabled = false;
         this.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
         _pAudio.PlayDeath();
         _ps.Play();
@@ -50,17 +44,16 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(_respawnTime);
 
         _art.SetActive(true);
-        this.GetComponent<PlayerShip>().enabled = true;
-        this.transform.position = new Vector3(0,0,0);
+        this.GetComponent<PlayerMove>().enabled = true;
+        this.transform.position = new Vector3(0,0,-10);
         _health = _maxHealth;
-        _healthBar.fillAmount = 1;
+        UIManager.instance.setPlayerHealthBar(1);
 
 
     }
 
     public void InstantKill() {
         _health = 0;
-        _healthBar.fillAmount = 0;
         StartCoroutine(DieAndRespawn());
 
     }
