@@ -34,6 +34,7 @@ public class MotherShip : MonoBehaviour
 
     public void Die() {
         art.SetActive(false);
+        ps.Play();
     }
     
 }

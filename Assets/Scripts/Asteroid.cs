@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] Rigidbody _rb;
     [SerializeField] float _speed;
     private Vector3 rotationRate;
+    private bool dying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +32,17 @@ public class Asteroid : MonoBehaviour
     }
 
     public void Die() {
-        _ps?.Play();
-        _audio?.Play();
+        if (dying) {
+            return;
+        } else {
+            dying = true;
+        }
+
+        if(_ps!=null)
+            _ps?.Play();
+        if (_audio != null)
+            _audio?.Play();
+
         _collider.enabled = false;
         _art.SetActive(false);
         Destroy(this.gameObject,2f);

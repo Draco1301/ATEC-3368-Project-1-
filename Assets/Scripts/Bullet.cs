@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
             }
 
             collision.gameObject.GetComponent<Asteroid>()?.Die();
-            PlayManager.instance.addScore(50);
+            PlayManager.instance.addScore(100);
         }
         if (!collision.gameObject.tag.Equals("Player")) {
             Destroy(this.gameObject);

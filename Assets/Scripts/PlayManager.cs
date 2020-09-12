@@ -96,6 +96,10 @@ public class PlayManager : MonoBehaviour
             _astroTimer = _astroSpawnRate - _astroidSpawnIncreaseRate * _roundNum;
             if (_astroTimer < 0.2) {
                 _astroTimer = 0.2f;
+                
+                for (int i=0;i< _roundNum/2 - (_astroSpawnRate/ _astroidSpawnIncreaseRate); i++) { 
+                    SpawnAsteroid();
+                }
             }
             SpawnAsteroid();
         }
@@ -121,7 +125,7 @@ public class PlayManager : MonoBehaviour
             Asteroid[] astros = GameObject.FindObjectsOfType<Asteroid>();
             foreach (Asteroid a in astros) {
                 a.Die();
-                addScore(100);
+                addScore(50);
             }
 
             updateMenu();
@@ -174,7 +178,7 @@ public class PlayManager : MonoBehaviour
     }
 
     public void repairMotherShip() {
-        _score -= 500 * (int)Math.Pow(2,repairCounter);
+        _score -= 500 * (int)Math.Pow(2, repairCounter);
         UIManager.instance.setScore(_score.ToString("000000000"));
 
         repairCounter++;
@@ -184,7 +188,7 @@ public class PlayManager : MonoBehaviour
 
     }
     public void upgradeCannons() {
-        _score -= cannonCost * (MSUP.cannonLV + 1);
+        _score -= cannonCost * (int)Math.Pow(2, (MSUP.cannonLV + 1));
         UIManager.instance.setScore(_score.ToString("000000000"));
         
         MSUP.cannonLV++;
@@ -193,7 +197,7 @@ public class PlayManager : MonoBehaviour
 
     }
     public void upgradeLaser() {
-        _score -= laserCost * (MSUP.laserLV + 1);
+        _score -= laserCost * (int)Math.Pow(2, (MSUP.laserLV + 1));
         UIManager.instance.setScore(_score.ToString("000000000"));
 
         MSUP.laserLV++;
@@ -202,7 +206,7 @@ public class PlayManager : MonoBehaviour
 
     }
     public void upgradeRicochet() {
-        _score -= ricochetCost * (BulletManager.ricochetLV + 1);
+        _score -= ricochetCost * (int)Math.Pow(2, BulletManager.ricochetLV + 1);
         UIManager.instance.setScore(_score.ToString("000000000"));
 
         BulletManager.ricochetLV++;
@@ -214,14 +218,14 @@ public class PlayManager : MonoBehaviour
         bool temp = _score >= 500 * (int)Math.Pow(2, repairCounter) && motherShip.Health != motherShip.MaxHealth;
         UIManager.instance.setRepair($"Repair Mothership ({500 * (int)Math.Pow(2, repairCounter)})", temp);
 
-        temp = _score >= cannonCost * (MSUP.cannonLV + 1);
-        UIManager.instance.setCannon($"Mothership Cannons Lv{MSUP.cannonLV + 1} ({cannonCost * (MSUP.cannonLV + 1)})", temp);
+        temp = _score >= cannonCost * (int)Math.Pow(2, (MSUP.cannonLV + 1));
+        UIManager.instance.setCannon($"Mothership Cannons Lv{MSUP.cannonLV + 1} ({cannonCost * (int)Math.Pow(2, (MSUP.cannonLV + 1))})", temp);
 
-        temp = _score >= laserCost * (MSUP.laserLV + 1);
-        UIManager.instance.setLaser($"Mothership Lasers Lv{MSUP.laserLV + 1} ({laserCost * (MSUP.laserLV + 1)})", temp);
+        temp = _score >= laserCost * (int)Math.Pow(2, (MSUP.laserLV + 1));
+        UIManager.instance.setLaser($"Mothership Lasers Lv{MSUP.laserLV + 1} ({laserCost * (int)Math.Pow(2, (MSUP.laserLV + 1))})", temp);
 
-        temp = _score >= ricochetCost * (BulletManager.ricochetLV + 1);
-        UIManager.instance.setRicochet($"Ricochet Lasers Lv{BulletManager.ricochetLV + 1} ({ricochetCost * (BulletManager.ricochetLV + 1)})", temp);
+        temp = _score >= ricochetCost * (int)Math.Pow(2, (BulletManager.ricochetLV + 1));
+        UIManager.instance.setRicochet($"Ricochet Lasers Lv{BulletManager.ricochetLV + 1} ({ricochetCost * (int)Math.Pow(2, (BulletManager.ricochetLV + 1))})", temp);
     }
 
     public bool inPlayMode() {

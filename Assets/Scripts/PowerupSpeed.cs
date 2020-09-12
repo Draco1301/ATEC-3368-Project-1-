@@ -50,8 +50,6 @@ public class PowerupSpeed : MonoBehaviour
 
 
     private void ActivatePowerup(PlayerMove playerShip) {
-       
-
 
         foreach (PowerupSpeed ps in _activePowerups) {
             if (ps._poweredUp) {
