@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class MothershipPowerUps : MonoBehaviour
@@ -25,6 +24,13 @@ public class MothershipPowerUps : MonoBehaviour
     float laserTimer = 0;
     float laserOnRate = 3;
     float laserOnTimer = 0;
+
+    private void Awake() {
+        ps1.Stop();
+        ps2.Stop();
+        ps3.Stop();
+        ps4.Stop();
+    }
 
     // Update is called once per frame
     void Update()

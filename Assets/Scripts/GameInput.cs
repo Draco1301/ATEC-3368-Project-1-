@@ -6,12 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class GameInput : MonoBehaviour
 {
+    bool paused = false;
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             ReloadLevel();
         } else
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.P)) {
+            paused = !paused;
+            UIManager.instance.setPaused(paused);
+        }
+        if (paused) {
+            Time.timeScale = 0;
+        } else { 
+            Time.timeScale = 1;
         }
     }
 

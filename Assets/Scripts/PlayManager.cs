@@ -171,10 +171,11 @@ public class PlayManager : MonoBehaviour
 
     }
 
-    public void addScore(int i) {
+    public int addScore(int i) {
         _score += (int)(i * (1+_roundNum * 0.1f));
         _totalscore += (int)(i * (1+_roundNum * 0.1f));
         UIManager.instance.setScore(_score.ToString("000000000"));
+        return (int)(i * (1 + _roundNum * 0.1f));
     }
 
     public void repairMotherShip() {

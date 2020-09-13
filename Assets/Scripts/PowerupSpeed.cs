@@ -61,6 +61,7 @@ public class PowerupSpeed : MonoBehaviour
             playerShip.SetSpeed(_speedIncreaseAmount);
             playerShip.ChangeBoosterColor(_powerColor);
         }
+        UIManager.instance.showSpeed();
     }
 
     private void DisableObject() {
@@ -78,6 +79,7 @@ public class PowerupSpeed : MonoBehaviour
 
         playerShip?.SetSpeed(-_speedIncreaseAmount);
         playerShip.RevertBoosterColor();
+        UIManager.instance.offSpeed();
         Destroy(this.gameObject);
 
     }

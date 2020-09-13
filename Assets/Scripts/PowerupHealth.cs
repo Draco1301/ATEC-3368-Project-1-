@@ -9,6 +9,7 @@ public class PowerupHealth : MonoBehaviour
             other.gameObject.GetComponent<PlayerHealth>().healthUP();
             GameObject.FindObjectOfType<MotherShip>().addHealth(5);
             Destroy(this.gameObject);
+            UIManager.instance.showHealth();
             
         } else if (other.gameObject.GetComponent<MotherShip>()) {
             Destroy(this.gameObject);

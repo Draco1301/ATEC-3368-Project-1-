@@ -40,11 +40,15 @@ public class Asteroid : MonoBehaviour
 
         if(_ps!=null)
             _ps?.Play();
+        
         if (_audio != null)
             _audio?.Play();
-
+        
+        if (_collider != null)
         _collider.enabled = false;
-        _art.SetActive(false);
+
+        if (_art != null)
+            _art.SetActive(false);
         Destroy(this.gameObject,2f);
     }
 

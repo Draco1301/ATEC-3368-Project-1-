@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button laserB;
     [SerializeField] Button cannonB;
     [SerializeField] Button ricochetB;
+    [SerializeField] Text speed;
+    [SerializeField] Text health;
+    [SerializeField] Text bomb;
+    [SerializeField] Text paused;
 
     public static UIManager instance;
 
@@ -81,5 +85,38 @@ public class UIManager : MonoBehaviour
         ricochetB.interactable = B;
 
     }
+
+    public void showSpeed() {
+        speed.enabled = true;
+    }
+
+    public void showBomb(int n) {
+        bomb.enabled = true;
+        bomb.text = "Bomb Bonus +" + n;
+        Invoke("offBomb", 5);
+    }
+
+    public void showHealth() {
+        health.enabled = true;
+        Invoke("offHealth", 5);
+    }
+
+    public void offSpeed() {
+        speed.enabled = false;
+    }
+
+    public void offBomb() {
+        bomb.enabled = false;
+    }
+
+    public void offHealth() {
+        health.enabled = false;
+    }
+
+    public void setPaused(bool b) {
+        paused.enabled = b;
+    }
+
+
 
 }
